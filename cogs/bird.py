@@ -25,15 +25,14 @@ class Bird:
 
     @commands.command()
     async def statusinfo(self, astable):
-        """Enter an IP or subnet to lookup in BIRD"""
-        cmd = subprocess.check_output(["birdc", "show", "proto", str(astable)])
+        """Show info on a peer"""
+        cmd = subprocess.check_output(["birdc", "show", "proto", "all", str(astable)])
         for page in chat_formatting.pagify(cmd.decode(), ['\n', ' '], shorten_by=12):
             await self.bot.say(chat_formatting.box(page))
 
     @commands.command()
     @commands.check(permissions.admincheck)
     async def birdrestart(self, astable):
-        """Enter an IP or subnet to restart in BIRD"""
         cmd = subprocess.check_output(["birdc", "restart", str(astable)])
         for page in chat_formatting.pagify(cmd.decode(), ['\n', ' '], shorten_by=12):
             await self.bot.say(chat_formatting.box(page))
