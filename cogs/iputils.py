@@ -27,7 +27,7 @@ class IpUtils:
     @commands.command()
     async def traceroute(self, v, ip):
         """Trace the route of an IP"""
-        cmd = run(f"traceroute -{v} {ip}")
+        cmd = self.run(f"traceroute -{v} {ip}")
         for page in chat_formatting.pagify(cmd.decode(), ['\n', ' '], shorten_by=12):
             await self.bot.say(chat_formatting.box(page))
 
