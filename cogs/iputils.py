@@ -12,23 +12,19 @@ class IpUtils:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    async def ping4(self, ip):
-        """Ping an IPv4"""
-        cmd = subprocess.check_output(["ping", "-4", "-c", "4", str(ip)])
-        await self.bot.say(chat_formatting.box(cmd.decode))
 
     @commands.command()
-    async def ping6(self, ip):
-        """Ping an IPv6"""
-        cmd = subprocess.check_output(["ping", "-6", "-c", "4", str(ip)])
-        await self.bot.say(chat_formatting.box(cmd.decode))
+    async def ping(self, v, ip):
+        """Ping an IP"""
+        cmd = await self.run("ping -{} -c 4 {}".format(v, ip)
+        for page in chat_formatting.pagify(cmd, ['\n', ' '], shorten_by=12):
+            await self.bot.say(chat_formatting.box(page))
 
     @commands.command()
     async def traceroute(self, v, ip):
         """Trace the route of an IP"""
         cmd = await self.run("traceroute -{} {}".format(v, ip))
-        for page in chat_formatting.pagify(cmd.decode(), ['\n', ' '], shorten_by=12):
+        for page in chat_formatting.pagify(cmd, ['\n', ' '], shorten_by=12):
             await self.bot.say(chat_formatting.box(page))
 
     @commands.command()
