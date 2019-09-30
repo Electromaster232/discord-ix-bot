@@ -2,7 +2,7 @@ from discord.ext import commands
 import subprocess
 import json
 import requests
-
+import asyncio
 from cogs.utils import chat_formatting
 
 
@@ -27,7 +27,7 @@ class IpUtils:
     @commands.command()
     async def traceroute(self, v, ip):
         """Trace the route of an IP"""
-        cmd = subprocess.check_output(["traceroute", f"-{v}", str(ip)])
+        cmd = run(f"traceroute -{v} {ip}")
         for page in chat_formatting.pagify(cmd.decode(), ['\n', ' '], shorten_by=12):
             await self.bot.say(chat_formatting.box(page))
 
@@ -59,7 +59,16 @@ class IpUtils:
             await self.bot.say("Zip Code : " + parsed_json['zip'])
             await self.bot.say("AS : " + parsed_json['as'])
             await self.bot.say("ISP : " + parsed_json['isp'])
+   
 
+    async def run(cmd):
+        proc = await asyncio.create_subprocess_shell(
+            cmd,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE)
+
+        stdout, stderr = await proc.communicate()
+        return stdout.decode()
 
 def setup(bot):
     bot.add_cog(IpUtils(bot))
