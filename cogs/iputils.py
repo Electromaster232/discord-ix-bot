@@ -16,18 +16,18 @@ class IpUtils:
     async def ping4(self, ip):
         """Ping an IPv4"""
         cmd = subprocess.check_output(["ping", "-4", "-c", "4", str(ip)])
-        self.bot.say(chat_formatting.box(cmd.decode))
+        await self.bot.say(chat_formatting.box(cmd.decode))
 
     @commands.command()
     async def ping6(self, ip):
         """Ping an IPv6"""
         cmd = subprocess.check_output(["ping", "-6", "-c", "4", str(ip)])
-        self.bot.say(chat_formatting.box(cmd.decode))
+        await self.bot.say(chat_formatting.box(cmd.decode))
 
     @commands.command()
     async def traceroute(self, v, ip):
         """Trace the route of an IP"""
-        cmd = self.run("traceroute -{} {}".format(v, ip))
+        cmd = await self.run("traceroute -{} {}".format(v, ip))
         for page in chat_formatting.pagify(cmd.decode(), ['\n', ' '], shorten_by=12):
             await self.bot.say(chat_formatting.box(page))
 
