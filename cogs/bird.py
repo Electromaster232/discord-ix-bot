@@ -15,7 +15,7 @@ class Bird:
         cmd = subprocess.check_output(["birdc", "show", "route", "for", str(subnet)])
         out = "```\n{0}\n```".format(cmd)
         for page in chat_formatting.pagify(out, ['\n', ' '], shorten_by=12):
-            await self.bot.say(page)
+            await self.bot.say(chat_formatting.box(page))
 
     @commands.command()
     async def status(self):
@@ -23,7 +23,7 @@ class Bird:
         cmd = subprocess.check_output(["birdc", "show", "proto"])
         out = "```\n{0}\n```".format(cmd)
         for page in chat_formatting.pagify(out, ['\n', ' '], shorten_by=12):
-            await self.bot.say(page)
+            await self.bot.say(chat_formatting.box(page))
 
     @commands.command()
     async def statusinfo(self, astable):
@@ -31,7 +31,7 @@ class Bird:
         cmd = subprocess.check_output(["birdc", "show", "proto", str(astable)])
         out = "```\n{0}\n```".format(cmd)
         for page in chat_formatting.pagify(out, ['\n', ' '], shorten_by=12):
-            await self.bot.say(page)
+            await self.bot.say(chat_formatting.box(page))
 
     @commands.command()
     @commands.check(permissions.admincheck)
@@ -40,7 +40,7 @@ class Bird:
         cmd = subprocess.check_output(["birdc", "restart", str(astable)])
         out = "```\n{0}\n```".format(cmd)
         for page in chat_formatting.pagify(out, ['\n', ' '], shorten_by=12):
-            await self.bot.say(page)
+            await self.bot.say(chat_formatting.box(page))
 
 
 def setup(bot):
