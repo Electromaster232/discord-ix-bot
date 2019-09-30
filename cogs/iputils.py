@@ -61,7 +61,7 @@ class IpUtils:
             await self.bot.say("ISP : " + parsed_json['isp'])
    
 
-    async def run(cmd):
+    async def run(self, cmd):
         proc = await asyncio.create_subprocess_shell(
             cmd,
             stdout=asyncio.subprocess.PIPE,
