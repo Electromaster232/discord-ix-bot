@@ -76,7 +76,7 @@ async def reload(extension_name: str):
 
 
 @bot.command()
-async def ping():
+async def pingbot():
     """Simple Ping Command"""
     em = discord.Embed(description="Pong!", color=discord.Color.blue())
     await bot.say(embed=em)
