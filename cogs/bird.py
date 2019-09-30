@@ -13,24 +13,21 @@ class Bird:
     async def route(self, subnet):
         """Enter an IP or subnet to lookup in BIRD"""
         cmd = subprocess.check_output(["birdc", "show", "route", "for", str(subnet)])
-        out = "```\n{0}\n```".format(cmd)
-        for page in chat_formatting.pagify(out, ['\n', ' '], shorten_by=12):
+        for page in chat_formatting.pagify(cmd, ['\n', ' '], shorten_by=12):
             await self.bot.say(chat_formatting.box(page))
 
     @commands.command()
     async def status(self):
         """Check the status of BIRD"""
         cmd = subprocess.check_output(["birdc", "show", "proto"])
-        out = "```\n{0}\n```".format(cmd)
-        for page in chat_formatting.pagify(out, ['\n', ' '], shorten_by=12):
+        for page in chat_formatting.pagify(cmd, ['\n', ' '], shorten_by=12):
             await self.bot.say(chat_formatting.box(page))
 
     @commands.command()
     async def statusinfo(self, astable):
         """Enter an IP or subnet to lookup in BIRD"""
         cmd = subprocess.check_output(["birdc", "show", "proto", str(astable)])
-        out = "```\n{0}\n```".format(cmd)
-        for page in chat_formatting.pagify(out, ['\n', ' '], shorten_by=12):
+        for page in chat_formatting.pagify(cmd, ['\n', ' '], shorten_by=12):
             await self.bot.say(chat_formatting.box(page))
 
     @commands.command()
@@ -38,8 +35,7 @@ class Bird:
     async def birdrestart(self, astable):
         """Enter an IP or subnet to restart in BIRD"""
         cmd = subprocess.check_output(["birdc", "restart", str(astable)])
-        out = "```\n{0}\n```".format(cmd)
-        for page in chat_formatting.pagify(out, ['\n', ' '], shorten_by=12):
+        for page in chat_formatting.pagify(cmd, ['\n', ' '], shorten_by=12):
             await self.bot.say(chat_formatting.box(page))
 
 
