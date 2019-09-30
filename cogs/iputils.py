@@ -16,14 +16,14 @@ class IpUtils:
     @commands.command()
     async def ping(self, v, ip):
         """Ping an IP"""
-        cmd = await self.run("ping -I eth0 -{} -c 4 {}".format(v, ip))
+        cmd = await self.run("ping -{} -c 4 {} -I 2a01:4f8:c2c:b0f9::1".format(v, ip))
         for page in chat_formatting.pagify(cmd, ['\n', ' '], shorten_by=12):
             await self.bot.say(chat_formatting.box(page))
 
     @commands.command()
     async def traceroute(self, v, ip):
         """Trace the route of an IP"""
-        cmd = await self.run("traceroute -i eth0 -{} {}".format(v, ip))
+        cmd = await self.run("traceroute -{} {} -i eth0".format(v, ip))
         for page in chat_formatting.pagify(cmd, ['\n', ' '], shorten_by=12):
             await self.bot.say(chat_formatting.box(page))
 
