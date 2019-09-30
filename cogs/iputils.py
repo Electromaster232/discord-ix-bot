@@ -16,7 +16,7 @@ class IpUtils:
     @commands.command()
     async def ping(self, v, ip):
         """Ping an IP"""
-        cmd = await self.run("ping -{} -c 4 {}".format(v, ip)
+        cmd = await self.run("ping -{} -c 4 {}".format(v, ip))
         for page in chat_formatting.pagify(cmd, ['\n', ' '], shorten_by=12):
             await self.bot.say(chat_formatting.box(page))
 
