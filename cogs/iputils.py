@@ -1,18 +1,40 @@
 from discord.ext import commands
+import subprocess
 import json
 import requests
 
-class IpLookup:
+from cogs.utils import chat_formatting
+
+
+class IpUtils:
     """Get Info About IPs"""
 
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command()
-    async def ip(self, ip):
+    async def ping4(self, ip):
+        """Ping an IPv4"""
+        cmd = subprocess.check_output(["ping", "-4", "-c", "4", str(ip)])
+        self.bot.say(chat_formatting.box(cmd.decode))
+
+    @commands.command()
+    async def ping6(self, ip):
+        """Ping an IPv6"""
+        cmd = subprocess.check_output(["ping", "-6", "-c", "4", str(ip)])
+        self.bot.say(chat_formatting.box(cmd.decode))
+
+    @commands.command()
+    async def traceroute(self, v, ip):
+        """Trace the route of an IP"""
+        cmd = subprocess.check_output(["traceroute", f"-{v}", str(ip)])
+        for page in chat_formatting.pagify(cmd.decode(), ['\n', ' '], shorten_by=12):
+            await self.bot.say(chat_formatting.box(page))
+
+    @commands.command()
+    async def iplookup(self, ip):
         """Get Info About an IP"""
 
-        #Your code will go here
         r = requests.get('http://ip-api.com/json/' + ip)
         # Make request to IP site
         response = r.text
