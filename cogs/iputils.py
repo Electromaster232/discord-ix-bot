@@ -62,4 +62,4 @@ class IpUtils:
 
 
 def setup(bot):
-    bot.add_cog(IpLookup(bot))
+    bot.add_cog(IpUtils(bot))
